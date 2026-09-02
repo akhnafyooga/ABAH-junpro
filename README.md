@@ -11,8 +11,8 @@ To maintain code quality and a smooth workflow, please follow all of these rules
 | `feature/` | For adding new features |
 | `fixing/`  | For bug fixes           |
 
-**Pattern:** `<type>/<your role>.<your_name>`  
-_Example:_ `feature/navbar.akmal`
+**Pattern:** `<type>/<role>.<your_name>`  
+_Example:_ `feature/be.akmal`
 
 ---
 
@@ -50,6 +50,7 @@ A local circular-waste digital platform that connects waste generators with coll
 ## 1. Project Description
 
 ### Problem & Direction
+
 ABAH is a digital platform for managing and distributing sorted waste. It helps households, offices, restaurants, schools, and small businesses offer recyclable materials such as cardboard, paper, PET bottles, cans, glass, and used cooking oil.
 
 Collectors, waste banks, recycling facilities, and community organizations can discover available materials, accept pickup requests, make offers, and record the actual weight collected. The platform provides a clearer path from waste source to processor instead of treating every item as ordinary trash.
@@ -85,7 +86,7 @@ graph TD
     API --> PICK[Pickup & Verification]
     API --> TX[Transactions & Payments]
     API --> IMP[Impact & Ratings]
-    
+
     AUTH --> DB[(PostgreSQL)]
     LIST --> DB
     OFFER --> DB
@@ -93,3 +94,4 @@ graph TD
     TX --> DB
     IMP --> DB
     API --> MEDIA[(Object Storage)]
+```
