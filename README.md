@@ -41,7 +41,7 @@ We follow a simplified [Conventional Commits](https://www.conventionalcommits.or
 
 ---
 
-# EcoSwap — Project Guide
+# ABAH — Project Guide
 
 A local circular-waste digital platform that connects waste generators with collectors and processors, turning separated waste into traceable material resources.
 
@@ -50,11 +50,11 @@ A local circular-waste digital platform that connects waste generators with coll
 ## 1. Project Description
 
 ### Problem & Direction
-EcoSwap is a digital platform for managing and distributing sorted waste. It helps households, offices, restaurants, schools, and small businesses offer recyclable materials such as cardboard, paper, PET bottles, cans, glass, and used cooking oil.
+ABAH is a digital platform for managing and distributing sorted waste. It helps households, offices, restaurants, schools, and small businesses offer recyclable materials such as cardboard, paper, PET bottles, cans, glass, and used cooking oil.
 
 Collectors, waste banks, recycling facilities, and community organizations can discover available materials, accept pickup requests, make offers, and record the actual weight collected. The platform provides a clearer path from waste source to processor instead of treating every item as ordinary trash.
 
-**Core Value Proposition:** EcoSwap makes waste separation, pickup coordination, weight verification, payment, and impact reporting easier in one place.
+**Core Value Proposition:** ABAH makes waste separation, pickup coordination, weight verification, payment, and impact reporting easier in one place.
 
 ---
 
@@ -73,7 +73,7 @@ Collectors, waste banks, recycling facilities, and community organizations can d
 
 ## 3. System Architecture
 
-EcoSwap uses a **Modular Monolith** architecture for the MVP to reduce deployment complexity while keeping clean boundaries to split into microservices later if the platform grows.
+ABAH uses a **Modular Monolith** architecture for the MVP to reduce deployment complexity while keeping clean boundaries to split into microservices later if the platform grows.
 
 ```mermaid
 graph TD
