@@ -95,3 +95,16 @@ graph TD
     IMP --> DB
     API --> MEDIA[(Object Storage)]
 ```
+
+## Frontend
+
+### Responsibilities
+- Develop the user interface
+- Create responsive layouts
+- Implement user interactions
+- Integrate frontend pages with APIs
+
+### Tech Stack
+- HTML
+- CSS
+- JavaScript
