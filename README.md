@@ -6,13 +6,13 @@ To maintain code quality and a smooth workflow, please follow all of these rules
 
 ### Branching Strategy
 
-| Type | Description |
-| :--- | :--- |
+| Type       | Description             |
+| :--------- | :---------------------- |
 | `feature/` | For adding new features |
-| `fixing/` | For bug fixes |
+| `fixing/`  | For bug fixes           |
 
-**Pattern:** `<type>/<short_description>.<your_name>`  
-*Example:* `feature/navbar.akmal`
+**Pattern:** `<type>/<your role>.<your_name>`  
+_Example:_ `feature/navbar.akmal`
 
 ---
 
@@ -22,12 +22,12 @@ We follow a simplified [Conventional Commits](https://www.conventionalcommits.or
 
 **Pattern:** `<type>(<scope>): <short_summary>`
 
-| Type | Description |
-| :--- | :--- |
-| `feat` | New feature |
-| `fix` | Bug fix |
-| `docs` | Documentation changes |
-| `style` | Layout/styling changes |
+| Type       | Description                               |
+| :--------- | :---------------------------------------- |
+| `feat`     | New feature                               |
+| `fix`      | Bug fix                                   |
+| `docs`     | Documentation changes                     |
+| `style`    | Layout/styling changes                    |
 | `refactor` | Code restructuring without feature change |
 
 ---
