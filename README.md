@@ -11,7 +11,7 @@ To maintain code quality and a smooth workflow, please follow all of these rules
 | `feature/` | For adding new features |
 | `fixing/`  | For bug fixes           |
 
-**Pattern:** `<type>/<role>.<your_name>`  
+**Pattern:** `<type>/<your role>.<your_name>`  
 _Example:_ `feature/navbar.akmal`
 
 ---
