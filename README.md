@@ -1,9 +1,9 @@
 # ABAH-junpro
 
 Created by:
-Akhnaf Fawzan Yogatrisna - 24/536720/TK/59561 - Software Architect
-Akmal Rafli Fauzan - 24/533033/TK/59053 - Backend Developer
-Rafi Busthami - 24/532760/TK/58998 - Frontend Developer
+1. Akhnaf Fawzan Yogatrisna - 24/536720/TK/59561 - Software Architect
+2. Akmal Rafli Fauzan - 24/533033/TK/59053 - Backend Developer
+3. Rafi Busthami - 24/532760/TK/58998 - Frontend Developer
 
 
 ## 🤝 Contribution Guidelines
