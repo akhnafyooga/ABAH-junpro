@@ -41,7 +41,7 @@ We follow a simplified [Conventional Commits](https://www.conventionalcommits.or
 
 ---
 
-# EcoSwap — Project Guide
+# ABAH — Project Guide
 
 A local circular-waste digital platform that connects waste generators with collectors and processors, turning separated waste into traceable material resources.
 
