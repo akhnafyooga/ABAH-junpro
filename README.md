@@ -1,116 +1,204 @@
-# ABAH-junpro
+# ABAH — Aplikasi Penukar Limbah
 
-Created by:
-1. Akhnaf Fawzan Yogatrisna - 24/536720/TK/59561 - Software Architect
-2. Akmal Rafli Fauzan - 24/533033/TK/59053 - Backend Developer
-3. Rafi Busthami - 24/532760/TK/58998 - Frontend Developer
+A digital circular-waste platform that connects waste generators with collectors and processors to divert recyclable materials from landfills, support local waste economies, and advance Sustainable Development Goal 13 (Climate Action).
 
+---
 
 ## 🤝 Contribution Guidelines
 
-To maintain code quality and a smooth workflow, please follow all of these rules.
+To maintain code quality and ensure a smooth workflow across the development lifecycle, all group members must strictly adhere to the following contribution rules.
+
+### Team Roles & Responsibilities
+* **Akhnaf Fawzan Yogatrisna** (Software Architect) — System architecture, module boundaries, UML modeling, and database schema design.
+* **Rafi Busthami** (Frontend Developer) — UI/UX implementation, client-side application logic, and user workflow integration.
+* **Akmal Rafli Fauzan** (Backend Developer) — API design, database ORM integration, business logic, and third-party service integration.
 
 ### Branching Strategy
+* **Naming Pattern:** `<type>/<short_description>.<your_name>`
+* **Examples:** `feature/navbar.akmal`, `fixing/weight-calculator.rafi`
 
-| Type       | Description             |
-| :--------- | :---------------------- |
-| `feature/` | For adding new features |
-| `fixing/`  | For bug fixes           |
+| Type | Purpose |
+| :--- | :--- |
+| `feature/` | Developing new application capabilities or UI components |
+| `fixing/` | Bug fixes, patch resolution, and error corrections |
 
-**Pattern:** `<type>/<role>.<your_name>`  
-_Example:_ `feature/be.akmal`
-
----
-
-### Commit Message Rules
-
-We follow a simplified [Conventional Commits](https://www.conventionalcommits.org/) pattern.
+### Commit Message Conventions
+We follow a simplified [Conventional Commits](https://www.conventionalcommits.org/) format:
 
 **Pattern:** `<type>(<scope>): <short_summary>`
 
-| Type       | Description                               |
-| :--------- | :---------------------------------------- |
-| `feat`     | New feature                               |
-| `fix`      | Bug fix                                   |
-| `docs`     | Documentation changes                     |
-| `style`    | Layout/styling changes                    |
-| `refactor` | Code restructuring without feature change |
+| Type | Description |
+| :--- | :--- |
+| `feat` | Adding a new feature or major capability |
+| `fix` | Resolving a bug or error |
+| `docs` | Modifying project documentation or comments |
+| `style` | Formatting, CSS/UI layout tweaks without logic changes |
+| `refactor` | Restructuring internal code without altering behavior |
+
+### Pull Request & Code Review Workflow
+1. Push your local working branch to the remote repository.
+2. Open a Pull Request (PR) targeting the `main` branch.
+3. Include a clear description of the changes made.
+4. Require a review and approval from at least one teammate prior to merging.
 
 ---
 
-### Pull Request & Review
+## 1. Project Overview & Academic Requirements
 
-1. Push your branch to remote repository.
-2. Open a Pull Request targeting the `main` branch.
-3. Add a clear description of the changes made.
-4. Request review from at least one teammate before merging.
+This project is developed as part of the Junior Project lab sequence (*Teknik Basis Data, Pemrograman Berbasis Objek*) under the primary theme of **Climate Action**.
 
----
-
-# ABAH — Project Guide
-
-A local circular-waste digital platform that connects waste generators with collectors and processors, turning separated waste into traceable material resources.
-
----
-
-## 1. Project Description
-
-### Problem & Direction
-
-ABAH is a digital platform for managing and distributing sorted waste. It helps households, offices, restaurants, schools, and small businesses offer recyclable materials such as cardboard, paper, PET bottles, cans, glass, and used cooking oil.
-
-Collectors, waste banks, recycling facilities, and community organizations can discover available materials, accept pickup requests, make offers, and record the actual weight collected. The platform provides a clearer path from waste source to processor instead of treating every item as ordinary trash.
-
-**Core Value Proposition:** ABAH makes waste separation, pickup coordination, weight verification, payment, and impact reporting easier in one place.
+### Course Constraints & Requirements
+* **Theme Alignment:** Climate Action (UN Sustainable Development Goal 13) — focused on environmental protection, waste diversion, and carbon footprint reduction.
+* **Core Technology Stack:** C# (.NET Framework / .NET Core) for desktop application development using Windows Presentation Foundation (WPF), Windows Forms (WinForms), or Windows App SDK.
+* **Database & Third-Party Integration:** PostgreSQL database integration for persistent storage, complemented by external API integrations (e.g., mapping services, cloud storage).
+* **Evaluation Scheme:**
+  * **Process Assessment (40%):** Weekly milestones and lab evaluations managed by Teaching Assistants.
+  * **Product Assessment (60%):** Final software demo and architecture evaluation conducted by Supervising Lecturers and the Academic Coordinator.
 
 ---
 
-## 2. Core Features (MVP Scope)
+## 2. Problem Statement & Proposed Solution
 
-1. **Accounts and Roles:** Register as a waste generator, collector, processor, or community partner. A user may hold more than one role.
-2. **Waste Listing:** Create a listing with material type, estimated weight, condition, photos, location, availability, and sale or donation preference.
-3. **Search and Matching:** Filter by material, distance, minimum volume, condition, and pickup schedule. Match supply with processor demand.
-4. **Offers and Negotiation:** Collectors can propose a price, pickup fee, and schedule. Both sides can accept, reject, or counter an offer.
-5. **Pickup Scheduling:** Book a pickup window and track statuses (`requested`, `accepted`, `on the way`, `collected`, `verified`, `completed`).
-6. **Weight Verification:** Record estimated versus actual weight, upload a scale photo, and calculate the final transaction value.
-7. **Payment and History:** Store transaction totals, payment status, receipts, cancellations, and a complete history for each user.
-8. **Ratings and Impact:** Rate reliability and material quality. Show kilograms collected, material categories, and estimated waste diverted.
+### Problem
+Domestic and commercial waste (cardboard, paper, plastic, glass, aluminum cans, used cooking oil) frequently ends up in landfills due to a lack of structured distribution channels. Waste producers lack visibility on nearby recycling options, while waste collectors struggle with inefficient material sourcing, non-transparent weighing processes, and lack of post-collection tracking.
+
+### Solution
+**ABAH** acts as a digital marketplace connecting waste generators directly with collectors and recycling processors. The platform streamlines waste categorization, listing creation, price negotiation, pickup scheduling, scale weight verification, and transparent transaction management.
 
 ---
 
-## 3. System Architecture
+## 3. Core MVP Features
 
-ABAH uses a **Modular Monolith** architecture for the MVP to reduce deployment complexity while keeping clean boundaries to split into microservices later if the platform grows.
+1. **User Accounts & Dynamic Roles:** Supports registration across multiple user roles (`WasteProducer`, `Collector`, `Processor`, `CommunityPartner`) where a single account can hold multiple roles.
+2. **Waste Listing:** Producers create detailed posts specifying material category, estimated weight, photo evidence, pickup location, and donation or trade preference.
+3. **Search & Material Matching:** Filter available listings by category, location distance, volume, condition, and availability.
+4. **Offers & Price Negotiation:** Collectors submit offers with custom material pricing, pickup fees, and target pickup times.
+5. **Pickup Scheduling & Tracking:** Manage pickup windows across distinct statuses (`requested`, `accepted`, `on_the_way`, `collected`, `verified`, `completed`).
+6. **Weight Verification System:** Transparently records estimated versus actual scale weights, including scale photo evidence uploading before final payout calculation.
+7. **Transaction & Financial Tracking:** Automatic payment total calculations based on verified weights, transaction receipts, and digital settlement logs.
+8. **Climate Impact Dashboard:** Visualizes total kilograms diverted from landfills, active environmental contribution metrics, and transaction history.
+
+---
+
+## 4. Software Architecture
+
+ABAH uses a clean **Modular Monolith Architecture** built on top of C# / .NET, ensuring strong separation of concerns across core domain entities while simplifying local deployment and desktop execution.
 
 ```mermaid
 graph TD
-    Client[Web / Mobile Browser] --> FE[Next.js Frontend]
-    FE --> API[NestJS REST API]
-    API --> AUTH[Auth & RBAC]
-    API --> LIST[Waste Listings]
-    API --> OFFER[Offers & Matching]
-    API --> PICK[Pickup & Verification]
-    API --> TX[Transactions & Payments]
-    API --> IMP[Impact & Ratings]
+    Client[C# Desktop Client - WPF / WinForms] --> Core[Core Application Engine]
+    
+    Core --> AUTH[Auth & User Role Module]
+    Core --> LIST[Waste Listing Module]
+    Core --> OFFER[Offers & Negotiation Module]
+    Core --> PICK[Pickup & Scheduling Module]
+    Core --> VERIF[Weight Verification Module]
+    Core --> TX[Transaction & Payout Module]
+    Core --> IMP[Climate Impact Module]
 
-    AUTH --> DB[(PostgreSQL)]
+    AUTH --> DB[(PostgreSQL Database)]
     LIST --> DB
     OFFER --> DB
     PICK --> DB
+    VERIF --> DB
     TX --> DB
     IMP --> DB
-    API --> MEDIA[(Object Storage)]
+
+    Core --> EXT[External APIs / Object Storage]
 ```
+## 5. Class Diagram
+```classDiagram
+    class User {
+        +int id
+        +string name
+        +string email
+        +string passwordHash
+        +string phoneNumber
+        +string address
+        +string locationCoords
+        +UserRole[] roles
+        +rateUser()
+    }
 
-## Frontend
+    class UserRole {
+        <<enumeration>>
+        WASTE_PRODUCER
+        COLLECTOR
+        PROCESSOR
+        COMMUNITY_PARTNER
+    }
 
-### Responsibilities
-- Develop the user interface
-- Create responsive layouts
-- Implement user interactions
-- Integrate frontend pages with APIs
+    class ImpactRecord {
+        +int impactId
+        +float wasteDivertedKg
+        +int environmentalPoints
+        +int transactionCount
+    }
 
-### Tech Stack
-- HTML
-- CSS
-- JavaScript
+    class WasteListing {
+        +int listingId
+        +string materialType
+        +float estimatedWeight
+        +string condition
+        +string photos
+        +string pickupLocation
+        +string status
+        +date createdAt
+        +createOffer()
+    }
+
+    class Offer {
+        +int offerId
+        +float proposedPrice
+        +float pickupFee
+        +string pickupSchedule
+        +string status
+    }
+
+    class PickupSchedule {
+        +int scheduleId
+        +datetime scheduledTime
+        +string status
+    }
+
+    class WeightVerification {
+        +int verificationId
+        +float estimatedWeight
+        +float actualWeight
+        +string photoEvidence
+        +string scaleId
+    }
+
+    class Transaction {
+        +int transactionId
+        +float finalWeight
+        +float totalPayment
+        +string transactionStatus
+        +string paymentMethod
+    }
+
+    %% Relationships
+    User "1" --> "1..*" UserRole : has roles >
+    User "1" --> "0..*" ImpactRecord : records >
+    User "1" --> "0..*" WasteListing : creates >
+    User "1" --> "0..*" Offer : submits >
+
+    WasteListing "1" <-- "0..*" Offer : targets
+    WasteListing "1" --> "1" PickupSchedule : schedules >
+
+    PickupSchedule "1" --> "1" WeightVerification : verifies >
+
+    Offer "1" --> "1" Transaction : generates >
+    WeightVerification "1" --> "1" Transaction : validates >
+
+```
+## 6. Tech Stack & Environments 
+Language & Runtime: C# / .NET SDK 10.0+
+
+User Interface: Windows Presentation Foundation (WPF) / WinForms
+
+Database: PostgreSQL managed via pgAdmin
+
+Version Control: Git & GitHub
+
+Development IDE: Visual Studio Code / Visual Studio 2022
