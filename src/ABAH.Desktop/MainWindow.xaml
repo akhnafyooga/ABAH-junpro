@@ -33,11 +33,11 @@
                 <Border DockPanel.Dock="Bottom" CornerRadius="16" Padding="16"
                         Background="#1AFFFFFF" BorderBrush="#22FFFFFF" BorderThickness="1">
                     <StackPanel>
-                        <TextBlock Text="Tingkatkan dampakmu" Foreground="White" FontWeight="Bold" FontSize="14" />
-                        <TextBlock Text="Ajak lebih banyak kolektor untuk memperluas jangkauan pickup."
+                        <TextBlock Text="Grow your impact" Foreground="White" FontWeight="Bold" FontSize="14" />
+                        <TextBlock Text="Invite more collectors to expand your pickup network."
                                    Foreground="{StaticResource SidebarTextBrush}" FontSize="12"
                                    TextWrapping="Wrap" Margin="0,6,0,12" />
-                        <Button Content="Undang Partner" HorizontalAlignment="Left"
+                        <Button Content="Invite a partner" HorizontalAlignment="Left"
                                 Background="White" Foreground="{StaticResource GreenDarkBrush}"
                                 Style="{StaticResource GhostButton}" />
                     </StackPanel>
@@ -80,7 +80,7 @@
                         <Border Background="{StaticResource BgBrush}" BorderBrush="{StaticResource LineBrush}"
                                 BorderThickness="1" CornerRadius="12" Padding="12,8" Width="280" Margin="0,0,16,0">
                             <Grid>
-                                <TextBlock Text="⌕  Cari listing, pickup, partner…"
+                                <TextBlock Text="⌕  Search listings, pickups, partners…"
                                            Foreground="{StaticResource MutedBrush}" FontSize="13" VerticalAlignment="Center" />
                             </Grid>
                         </Border>

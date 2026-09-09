@@ -2,7 +2,7 @@ using System.Windows.Media;
 
 namespace ABAH.Desktop.Models;
 
-/// <summary>Kartu statistik ringkas di bagian atas dashboard.</summary>
+/// <summary>Compact stat card at the top of the dashboard.</summary>
 public class StatCard
 {
     public string Icon { get; set; } = "";
@@ -16,7 +16,7 @@ public class StatCard
     public string DeltaGlyph => IsUp ? "▲" : "▼"; // ▲ / ▼
 }
 
-/// <summary>Baris rincian material (fitur #8 Climate Impact Dashboard).</summary>
+/// <summary>Material breakdown row (feature #8 Climate Impact Dashboard).</summary>
 public class MaterialBreakdown
 {
     public string Name { get; set; } = "";
@@ -27,7 +27,7 @@ public class MaterialBreakdown
     public string PercentText => $"{Percent:0}%";
 }
 
-/// <summary>Item penjemputan terbaru pada tabel dashboard.</summary>
+/// <summary>Recent pickup row on the dashboard table.</summary>
 public class PickupItem
 {
     public string Material { get; set; } = "";
@@ -38,17 +38,17 @@ public class PickupItem
 
     public string StatusLabel => Status switch
     {
-        PickupStatus.Requested => "Menunggu",
-        PickupStatus.Accepted  => "Diterima",
-        PickupStatus.OnTheWay  => "Dalam perjalanan",
-        PickupStatus.Collected => "Terkumpul",
-        PickupStatus.Verified  => "Terverifikasi",
-        PickupStatus.Completed => "Selesai",
+        PickupStatus.Requested => "Requested",
+        PickupStatus.Accepted  => "Accepted",
+        PickupStatus.OnTheWay  => "On the way",
+        PickupStatus.Collected => "Collected",
+        PickupStatus.Verified  => "Verified",
+        PickupStatus.Completed => "Completed",
         _ => Status.ToString()
     };
 }
 
-/// <summary>Riwayat transaksi terbaru (fitur #7 Transaction &amp; Financial Tracking).</summary>
+/// <summary>Recent transaction history (feature #7 Transaction &amp; Financial Tracking).</summary>
 public class TransactionItem
 {
     public string Title { get; set; } = "";
