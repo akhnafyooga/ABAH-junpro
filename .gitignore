@@ -31,3 +31,7 @@ packages/
 
 # Test results
 [Tt]est[Rr]esult*/
+
+# Claude Code local files
+.claude/
+
