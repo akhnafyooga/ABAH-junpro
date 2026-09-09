@@ -68,8 +68,8 @@
             <Border Grid.Column="0" Style="{StaticResource Card}" Margin="0,0,18,0">
                 <StackPanel>
                     <StackPanel Margin="0,0,0,18">
-                        <TextBlock Text="Sampah Terkumpul" Style="{StaticResource CardTitle}" />
-                        <TextBlock Text="Berat (kg) per bulan, 2026" Style="{StaticResource CardSubtitle}" />
+                        <TextBlock Text="Waste Collected" Style="{StaticResource CardTitle}" />
+                        <TextBlock Text="Weight (kg) per month, 2026" Style="{StaticResource CardSubtitle}" />
                     </StackPanel>
 
                     <ItemsControl ItemsSource="{Binding MonthlyWaste}" Height="210" VerticalAlignment="Bottom">
@@ -111,8 +111,8 @@
             <Border Grid.Column="1" Style="{StaticResource Card}">
                 <StackPanel>
                     <StackPanel Margin="0,0,0,18">
-                        <TextBlock Text="Kategori Material" Style="{StaticResource CardTitle}" />
-                        <TextBlock Text="Distribusi bulan ini" Style="{StaticResource CardSubtitle}" />
+                        <TextBlock Text="Material Categories" Style="{StaticResource CardTitle}" />
+                        <TextBlock Text="Distribution this month" Style="{StaticResource CardSubtitle}" />
                     </StackPanel>
 
                     <ItemsControl ItemsSource="{Binding Materials}">
@@ -158,10 +158,10 @@
                 <StackPanel>
                     <Grid Margin="0,0,0,14">
                         <StackPanel HorizontalAlignment="Left">
-                            <TextBlock Text="Pickup Terbaru" Style="{StaticResource CardTitle}" />
-                            <TextBlock Text="Status penjemputan" Style="{StaticResource CardSubtitle}" />
+                            <TextBlock Text="Recent Pickups" Style="{StaticResource CardTitle}" />
+                            <TextBlock Text="Pickup statuses" Style="{StaticResource CardSubtitle}" />
                         </StackPanel>
-                        <Button Content="Lihat semua" HorizontalAlignment="Right"
+                        <Button Content="View all" HorizontalAlignment="Right"
                                 Style="{StaticResource GhostButton}" />
                     </Grid>
 
@@ -174,8 +174,8 @@
                             <ColumnDefinition Width="1.5*" />
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="MATERIAL" FontSize="11" FontWeight="Bold" Foreground="{StaticResource MutedBrush}" />
-                        <TextBlock Grid.Column="1" Text="KOLEKTOR" FontSize="11" FontWeight="Bold" Foreground="{StaticResource MutedBrush}" />
-                        <TextBlock Grid.Column="2" Text="BERAT" FontSize="11" FontWeight="Bold" Foreground="{StaticResource MutedBrush}" />
+                        <TextBlock Grid.Column="1" Text="COLLECTOR" FontSize="11" FontWeight="Bold" Foreground="{StaticResource MutedBrush}" />
+                        <TextBlock Grid.Column="2" Text="WEIGHT" FontSize="11" FontWeight="Bold" Foreground="{StaticResource MutedBrush}" />
                         <TextBlock Grid.Column="3" Text="STATUS" FontSize="11" FontWeight="Bold" Foreground="{StaticResource MutedBrush}" />
                     </Grid>
                     <Border Height="1" Background="{StaticResource LineBrush}" Margin="0,0,0,4" />
@@ -219,8 +219,8 @@
                 <StackPanel>
                     <Grid Margin="0,0,0,14">
                         <StackPanel HorizontalAlignment="Left">
-                            <TextBlock Text="Transaksi Terbaru" Style="{StaticResource CardTitle}" />
-                            <TextBlock Text="Riwayat pembayaran" Style="{StaticResource CardSubtitle}" />
+                            <TextBlock Text="Recent Transactions" Style="{StaticResource CardTitle}" />
+                            <TextBlock Text="Payment history" Style="{StaticResource CardSubtitle}" />
                         </StackPanel>
                     </Grid>
 

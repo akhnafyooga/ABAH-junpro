@@ -6,8 +6,8 @@ using ABAH.Desktop.Models;
 namespace ABAH.Desktop.Converters;
 
 /// <summary>
-/// Mengubah <see cref="PickupStatus"/> menjadi warna badge.
-/// ConverterParameter "bg" mengembalikan warna latar, selain itu warna teks.
+/// Converts a <see cref="PickupStatus"/> into a badge color.
+/// ConverterParameter "bg" returns the background color; otherwise the text color.
 /// </summary>
 public class StatusToBrushConverter : IValueConverter
 {
