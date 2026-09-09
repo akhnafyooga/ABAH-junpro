@@ -1,18 +1,24 @@
 # ABAH-junpro
 
+Created by:
+1. Akhnaf Fawzan Yogatrisna - 24/536720/TK/59561 - Software Architect
+2. Akmal Rafli Fauzan - 24/533033/TK/59053 - Backend Developer
+3. Rafi Busthami - 24/532760/TK/58998 - Frontend Developer
+
+
 ## 🤝 Contribution Guidelines
 
 To maintain code quality and a smooth workflow, please follow all of these rules.
 
 ### Branching Strategy
 
-| Type | Description |
-| :--- | :--- |
+| Type       | Description             |
+| :--------- | :---------------------- |
 | `feature/` | For adding new features |
-| `fixing/` | For bug fixes |
+| `fixing/`  | For bug fixes           |
 
-**Pattern:** `<type>/<short_description>.<your_name>`  
-*Example:* `feature/navbar.akmal`
+**Pattern:** `<type>/<role>.<your_name>`  
+_Example:_ `feature/be.akmal`
 
 ---
 
@@ -22,12 +28,12 @@ We follow a simplified [Conventional Commits](https://www.conventionalcommits.or
 
 **Pattern:** `<type>(<scope>): <short_summary>`
 
-| Type | Description |
-| :--- | :--- |
-| `feat` | New feature |
-| `fix` | Bug fix |
-| `docs` | Documentation changes |
-| `style` | Layout/styling changes |
+| Type       | Description                               |
+| :--------- | :---------------------------------------- |
+| `feat`     | New feature                               |
+| `fix`      | Bug fix                                   |
+| `docs`     | Documentation changes                     |
+| `style`    | Layout/styling changes                    |
 | `refactor` | Code restructuring without feature change |
 
 ---
@@ -50,11 +56,12 @@ A local circular-waste digital platform that connects waste generators with coll
 ## 1. Project Description
 
 ### Problem & Direction
-EcoSwap is a digital platform for managing and distributing sorted waste. It helps households, offices, restaurants, schools, and small businesses offer recyclable materials such as cardboard, paper, PET bottles, cans, glass, and used cooking oil.
+
+ABAH is a digital platform for managing and distributing sorted waste. It helps households, offices, restaurants, schools, and small businesses offer recyclable materials such as cardboard, paper, PET bottles, cans, glass, and used cooking oil.
 
 Collectors, waste banks, recycling facilities, and community organizations can discover available materials, accept pickup requests, make offers, and record the actual weight collected. The platform provides a clearer path from waste source to processor instead of treating every item as ordinary trash.
 
-**Core Value Proposition:** EcoSwap makes waste separation, pickup coordination, weight verification, payment, and impact reporting easier in one place.
+**Core Value Proposition:** ABAH makes waste separation, pickup coordination, weight verification, payment, and impact reporting easier in one place.
 
 ---
 
@@ -73,7 +80,7 @@ Collectors, waste banks, recycling facilities, and community organizations can d
 
 ## 3. System Architecture
 
-EcoSwap uses a **Modular Monolith** architecture for the MVP to reduce deployment complexity while keeping clean boundaries to split into microservices later if the platform grows.
+ABAH uses a **Modular Monolith** architecture for the MVP to reduce deployment complexity while keeping clean boundaries to split into microservices later if the platform grows.
 
 ```mermaid
 graph TD
@@ -85,7 +92,7 @@ graph TD
     API --> PICK[Pickup & Verification]
     API --> TX[Transactions & Payments]
     API --> IMP[Impact & Ratings]
-    
+
     AUTH --> DB[(PostgreSQL)]
     LIST --> DB
     OFFER --> DB
