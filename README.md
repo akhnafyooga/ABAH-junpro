@@ -35,11 +35,26 @@ We follow a simplified [Conventional Commits](https://www.conventionalcommits.or
 | `style` | Formatting, CSS/UI layout tweaks without logic changes |
 | `refactor` | Restructuring internal code without altering behavior |
 
-### Pull Request & Code Review Workflow
-1. Push your local working branch to the remote repository.
-2. Open a Pull Request (PR) targeting the `main` branch.
-3. Include a clear description of the changes made.
-4. Require a review and approval from at least one teammate prior to merging.
+### Pull Request & Review
+
+1. Push your branch to remote repository.
+2. Open a Pull Request targeting the `main` branch.
+3. Add a clear description of the changes made.
+4. Request review from at least one teammate before merging.
+---
+
+## Frontend
+
+### Responsibilities
+- Develop the user interface
+- Create responsive layouts
+- Implement user interactions
+- Integrate frontend pages with APIs
+
+### Tech Stack
+- HTML
+- CSS
+- JavaScript
 
 ---
 
@@ -103,102 +118,4 @@ graph TD
     VERIF --> DB
     TX --> DB
     IMP --> DB
-
-    Core --> EXT[External APIs / Object Storage]
-```
-## 5. Class Diagram
-```classDiagram
-    class User {
-        +int id
-        +string name
-        +string email
-        +string passwordHash
-        +string phoneNumber
-        +string address
-        +string locationCoords
-        +UserRole[] roles
-        +rateUser()
-    }
-
-    class UserRole {
-        <<enumeration>>
-        WASTE_PRODUCER
-        COLLECTOR
-        PROCESSOR
-        COMMUNITY_PARTNER
-    }
-
-    class ImpactRecord {
-        +int impactId
-        +float wasteDivertedKg
-        +int environmentalPoints
-        +int transactionCount
-    }
-
-    class WasteListing {
-        +int listingId
-        +string materialType
-        +float estimatedWeight
-        +string condition
-        +string photos
-        +string pickupLocation
-        +string status
-        +date createdAt
-        +createOffer()
-    }
-
-    class Offer {
-        +int offerId
-        +float proposedPrice
-        +float pickupFee
-        +string pickupSchedule
-        +string status
-    }
-
-    class PickupSchedule {
-        +int scheduleId
-        +datetime scheduledTime
-        +string status
-    }
-
-    class WeightVerification {
-        +int verificationId
-        +float estimatedWeight
-        +float actualWeight
-        +string photoEvidence
-        +string scaleId
-    }
-
-    class Transaction {
-        +int transactionId
-        +float finalWeight
-        +float totalPayment
-        +string transactionStatus
-        +string paymentMethod
-    }
-
-    %% Relationships
-    User "1" --> "1..*" UserRole : has roles >
-    User "1" --> "0..*" ImpactRecord : records >
-    User "1" --> "0..*" WasteListing : creates >
-    User "1" --> "0..*" Offer : submits >
-
-    WasteListing "1" <-- "0..*" Offer : targets
-    WasteListing "1" --> "1" PickupSchedule : schedules >
-
-    PickupSchedule "1" --> "1" WeightVerification : verifies >
-
-    Offer "1" --> "1" Transaction : generates >
-    WeightVerification "1" --> "1" Transaction : validates >
-
-```
-## 6. Tech Stack & Environments 
-Language & Runtime: C# / .NET SDK 10.0+
-
-User Interface: Windows Presentation Foundation (WPF) / WinForms
-
-Database: PostgreSQL managed via pgAdmin
-
-Version Control: Git & GitHub
-
-Development IDE: Visual Studio Code / Visual Studio 2022
+    API --> MEDIA[(Object Storage)]
