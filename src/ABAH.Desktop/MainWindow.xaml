@@ -1,0 +1,113 @@
+<Window x:Class="ABAH.Desktop.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:views="clr-namespace:ABAH.Desktop.Views"
+        Title="ABAH — Dashboard"
+        Height="820" Width="1280"
+        MinHeight="640" MinWidth="1040"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource BgBrush}"
+        FontFamily="{StaticResource AppFont}">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="256" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- ============ Sidebar ============ -->
+        <Border Grid.Column="0" Background="{StaticResource GreenDarkBrush}">
+            <DockPanel Margin="18,22">
+
+                <!-- Brand -->
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="6,0,0,26">
+                    <Border Width="38" Height="38" CornerRadius="11" Background="{StaticResource GreenBrush}">
+                        <TextBlock Text="♻" Foreground="White" FontSize="20"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <TextBlock Text="ABAH" Foreground="White" FontSize="22" FontWeight="Bold"
+                               VerticalAlignment="Center" Margin="10,0,0,0" />
+                </StackPanel>
+
+                <!-- Promo (bottom) -->
+                <Border DockPanel.Dock="Bottom" CornerRadius="16" Padding="16"
+                        Background="#1AFFFFFF" BorderBrush="#22FFFFFF" BorderThickness="1">
+                    <StackPanel>
+                        <TextBlock Text="Grow your impact" Foreground="White" FontWeight="Bold" FontSize="14" />
+                        <TextBlock Text="Invite more collectors to expand your pickup network."
+                                   Foreground="{StaticResource SidebarTextBrush}" FontSize="12"
+                                   TextWrapping="Wrap" Margin="0,6,0,12" />
+                        <Button Content="Invite a partner" HorizontalAlignment="Left"
+                                Background="White" Foreground="{StaticResource GreenDarkBrush}"
+                                Style="{StaticResource GhostButton}" />
+                    </StackPanel>
+                </Border>
+
+                <!-- Nav -->
+                <StackPanel DockPanel.Dock="Top">
+                    <TextBlock Text="MENU" Foreground="{StaticResource SidebarMutedBrush}"
+                               FontSize="11" FontWeight="SemiBold" Margin="8,14,0,6" />
+                    <RadioButton Content="▦   Dashboard" GroupName="nav" IsChecked="True" Style="{StaticResource NavItem}" />
+                    <RadioButton Content="☰   Waste Listings" GroupName="nav" Style="{StaticResource NavItem}" />
+                    <RadioButton Content="⇄   Offers" GroupName="nav" Style="{StaticResource NavItem}" />
+                    <RadioButton Content="⛟   Pickups" GroupName="nav" Style="{StaticResource NavItem}" />
+                    <RadioButton Content="✔   Verification" GroupName="nav" Style="{StaticResource NavItem}" />
+                    <RadioButton Content="₿   Transactions" GroupName="nav" Style="{StaticResource NavItem}" />
+                    <RadioButton Content="★   Impact" GroupName="nav" Style="{StaticResource NavItem}" />
+
+                    <TextBlock Text="ACCOUNT" Foreground="{StaticResource SidebarMutedBrush}"
+                               FontSize="11" FontWeight="SemiBold" Margin="8,18,0,6" />
+                    <RadioButton Content="⚙   Settings" GroupName="nav" Style="{StaticResource NavItem}" />
+                    <RadioButton Content="⏻   Logout" GroupName="nav" Style="{StaticResource NavItem}" />
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
+        <!-- ============ Main area ============ -->
+        <DockPanel Grid.Column="1">
+
+            <!-- Topbar -->
+            <Border DockPanel.Dock="Top" Background="{StaticResource CardBrush}"
+                    BorderBrush="{StaticResource LineBrush}" BorderThickness="0,0,0,1" Padding="28,16">
+                <Grid>
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="Dashboard" FontSize="20" FontWeight="Bold" Foreground="{StaticResource InkBrush}" />
+                        <TextBlock Text="{Binding Greeting}" FontSize="13" Foreground="{StaticResource MutedBrush}" />
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                        <!-- Search -->
+                        <Border Background="{StaticResource BgBrush}" BorderBrush="{StaticResource LineBrush}"
+                                BorderThickness="1" CornerRadius="12" Padding="12,8" Width="280" Margin="0,0,16,0">
+                            <Grid>
+                                <TextBlock Text="⌕  Search listings, pickups, partners…"
+                                           Foreground="{StaticResource MutedBrush}" FontSize="13" VerticalAlignment="Center" />
+                            </Grid>
+                        </Border>
+
+                        <!-- Notification -->
+                        <Border Width="40" Height="40" CornerRadius="11" Background="{StaticResource CardBrush}"
+                                BorderBrush="{StaticResource LineBrush}" BorderThickness="1" Margin="0,0,14,0">
+                            <TextBlock Text="🔔" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+
+                        <!-- User -->
+                        <Border Width="42" Height="42" CornerRadius="12" Background="{StaticResource GreenBrush}">
+                            <TextBlock Text="AR" Foreground="White" FontWeight="Bold" FontSize="15"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <StackPanel VerticalAlignment="Center" Margin="10,0,0,0">
+                            <TextBlock Text="{Binding UserName}" FontWeight="Bold" FontSize="14" Foreground="{StaticResource InkBrush}" />
+                            <TextBlock Text="{Binding UserRole}" FontSize="12" Foreground="{StaticResource MutedBrush}" />
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- Scrollable dashboard content -->
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="0">
+                <views:DashboardView Margin="0" />
+            </ScrollViewer>
+        </DockPanel>
+    </Grid>
+</Window>
