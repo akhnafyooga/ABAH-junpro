@@ -201,4 +201,4 @@ Database: PostgreSQL managed via pgAdmin
 
 Version Control: Git & GitHub
 
-Development IDE: Visual Studio Code / Visual Studio 2022
+Development IDE: Visual Studio Code 
