@@ -29,36 +29,22 @@
                                VerticalAlignment="Center" Margin="10,0,0,0" />
                 </StackPanel>
 
-                <!-- Promo (bottom) -->
-                <Border DockPanel.Dock="Bottom" CornerRadius="16" Padding="16"
-                        Background="#1AFFFFFF" BorderBrush="#22FFFFFF" BorderThickness="1">
-                    <StackPanel>
-                        <TextBlock Text="Grow your impact" Foreground="White" FontWeight="Bold" FontSize="14" />
-                        <TextBlock Text="Invite more collectors to expand your pickup network."
-                                   Foreground="{StaticResource SidebarTextBrush}" FontSize="12"
-                                   TextWrapping="Wrap" Margin="0,6,0,12" />
-                        <Button Content="Invite a partner" HorizontalAlignment="Left"
-                                Background="White" Foreground="{StaticResource GreenDarkBrush}"
-                                Style="{StaticResource GhostButton}" />
-                    </StackPanel>
-                </Border>
-
                 <!-- Nav -->
                 <StackPanel DockPanel.Dock="Top">
                     <TextBlock Text="MENU" Foreground="{StaticResource SidebarMutedBrush}"
                                FontSize="11" FontWeight="SemiBold" Margin="8,14,0,6" />
-                    <RadioButton Content="▦   Dashboard" GroupName="nav" IsChecked="True" Style="{StaticResource NavItem}" />
-                    <RadioButton Content="☰   Waste Listings" GroupName="nav" Style="{StaticResource NavItem}" />
-                    <RadioButton Content="⇄   Offers" GroupName="nav" Style="{StaticResource NavItem}" />
-                    <RadioButton Content="⛟   Pickups" GroupName="nav" Style="{StaticResource NavItem}" />
-                    <RadioButton Content="✔   Verification" GroupName="nav" Style="{StaticResource NavItem}" />
-                    <RadioButton Content="₿   Transactions" GroupName="nav" Style="{StaticResource NavItem}" />
-                    <RadioButton Content="★   Impact" GroupName="nav" Style="{StaticResource NavItem}" />
+                    <RadioButton Click="Navigate_Click" Tag="1" Content="▦   Dashboard" GroupName="nav" IsChecked="True" Style="{StaticResource NavItem}" />
+                    <RadioButton Click="Navigate_Click" Tag="2" Content="☰   Waste Listings" GroupName="nav" Style="{StaticResource NavItem}" />
+                    <RadioButton Click="Navigate_Click" Tag="3" Content="⇄   Offers" GroupName="nav" Style="{StaticResource NavItem}" />
+                    <RadioButton Click="Navigate_Click" Tag="4" Content="⛟   Pickups" GroupName="nav" Style="{StaticResource NavItem}" />
+                    <RadioButton Click="Navigate_Click" Tag="5" Content="✔   Verification" GroupName="nav" Style="{StaticResource NavItem}" />
+                    <RadioButton Click="Navigate_Click" Tag="6" Content="₿   Transactions" GroupName="nav" Style="{StaticResource NavItem}" />
+                    <RadioButton Click="Navigate_Click" Tag="7" Content="★   Impact" GroupName="nav" Style="{StaticResource NavItem}" />
 
                     <TextBlock Text="ACCOUNT" Foreground="{StaticResource SidebarMutedBrush}"
                                FontSize="11" FontWeight="SemiBold" Margin="8,18,0,6" />
-                    <RadioButton Content="⚙   Settings" GroupName="nav" Style="{StaticResource NavItem}" />
-                    <RadioButton Content="⏻   Logout" GroupName="nav" Style="{StaticResource NavItem}" />
+                    <RadioButton Click="Navigate_Click" Tag="8" Content="⚙   Settings" GroupName="nav" Style="{StaticResource NavItem}" />
+                    <RadioButton Click="Navigate_Click" Tag="9" Content="⏻   Logout" GroupName="nav" Style="{StaticResource NavItem}" />
                 </StackPanel>
             </DockPanel>
         </Border>
@@ -66,53 +52,7 @@
         <!-- ============ Main area ============ -->
         <DockPanel Grid.Column="1">
 
-            <!-- Topbar -->
-            <Border DockPanel.Dock="Top" Background="{StaticResource CardBrush}"
-                    BorderBrush="{StaticResource LineBrush}" BorderThickness="0,0,0,1" Padding="28,16">
-                <Grid>
-                    <StackPanel VerticalAlignment="Center">
-                        <TextBlock Text="Dashboard" FontSize="20" FontWeight="Bold" Foreground="{StaticResource InkBrush}" />
-                        <TextBlock Text="{Binding Greeting}" FontSize="13" Foreground="{StaticResource MutedBrush}" />
-                    </StackPanel>
-
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                        <!-- Search -->
-                        <Border Background="{StaticResource BgBrush}" BorderBrush="{StaticResource LineBrush}"
-                                BorderThickness="1" CornerRadius="12" Padding="12,8" Width="280" Margin="0,0,16,0">
-                            <Grid>
-                                <TextBlock Text="⌕  Search listings, pickups, partners…"
-                                           Foreground="{StaticResource MutedBrush}" FontSize="13" VerticalAlignment="Center" />
-                            </Grid>
-                        </Border>
-
-                        <!-- Notification -->
-                        <Border Width="40" Height="40" CornerRadius="11" Background="{StaticResource CardBrush}"
-                                BorderBrush="{StaticResource LineBrush}" BorderThickness="1" Margin="0,0,14,0">
-                            <TextBlock Text="🔔" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Border>
-
-                        <!-- User -->
-                        <Border Width="42" Height="42" CornerRadius="12" Background="{StaticResource GreenBrush}">
-                            <TextBlock Text="AR" Foreground="White" FontWeight="Bold" FontSize="15"
-                                       HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Border>
-                        <StackPanel VerticalAlignment="Center" Margin="10,0,0,0">
-                            <TextBlock Text="{Binding UserName}" FontWeight="Bold" FontSize="14" Foreground="{StaticResource InkBrush}" />
-                            <TextBlock Text="{Binding UserRole}" FontSize="12" Foreground="{StaticResource MutedBrush}" />
-                        </StackPanel>
-                    </StackPanel>
-                </Grid>
-            </Border>
-
-            <!-- Scrollable dashboard content -->
-            <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="0">
-                <StackPanel>
-                    <Button Content="Open offers" Click="OpenOffers_Click"
-                            HorizontalAlignment="Right" Margin="0,20,28,0"
-                            Style="{StaticResource PrimaryButton}" />
-                    <views:DashboardView />
-                </StackPanel>
-            </ScrollViewer>
+            <Border DockPanel.Dock="Top" Background="White" Padding="28,16"><TextBlock x:Name="PageTitle" FontSize="24" FontWeight="Bold" /></Border><ContentControl x:Name="PageHost" />
         </DockPanel>
     </Grid>
 </Window>

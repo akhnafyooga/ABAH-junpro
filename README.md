@@ -210,39 +210,36 @@ offers. Collector selection is for the demo and does not require an account.
 Enter the proposed offer amount in rupiah and a pickup fee from zero through the
 proposed amount. Enter the pickup date and time in your local time zone.
 
-### Set up the database
+### Run the WPF workflow demo on development
 
-Create an empty PostgreSQL database named `abah` owned by your local PostgreSQL
-user. From the repository root, apply the schema and then the demo seed. Replace
-`YOUR_USER` with your PostgreSQL username.
-
-```powershell
-psql -h localhost -U YOUR_USER -d abah -v ON_ERROR_STOP=1 -f database/001_offers.sql -f database/002_demo_seed.sql
-```
-
-You can also run the two SQL files in order in pgAdmin's Query Tool for `abah`.
-
-### Run and verify
-
-Set the connection string in the PowerShell session used to launch the app.
-Replace the username and password placeholders with your local credentials.
+Create a PostgreSQL database named `abah`. Run the three scripts in order in
+pgAdmin, or from the repository root with psql:
 
 ```powershell
+psql -h localhost -U YOUR_USER -d abah -v ON_ERROR_STOP=1 -f database/001_offers.sql -f database/002_demo_seed.sql -f database/003_workflow.sql
 $env:ABAH_POSTGRES_CONNECTION = 'Host=localhost;Port=5432;Database=abah;Username=YOUR_USER;Password=YOUR_PASSWORD'
 dotnet run --project src/ABAH.Desktop
 ```
 
-1. On the dashboard, click **Open offers**. Select **PET bottles** and
-   **Melati Waste Bank**, enter `25000` for the price and `0` for the fee,
-   and choose a future pickup time.
-2. Click **Submit offer** and record the offer ID. Restart the app and open
-   **Offers** again to see the saved row.
-3. Run the following query in the same database. Match the offer ID in the app
-   to `offer_id` in the query result.
+Start Visual Studio from an environment that has the same connection variable
+if using F5. Use test data only. Settings switches demo roles locally and the
+desktop connects directly to PostgreSQL. This prototype has no authenticated
+accounts or API authorization. The original Module 8 offers remain in the
+legacy offers table and use their original price semantics.
 
-```sql
-SELECT offer_id, listing_id, collector_id, proposed_price, pickup_fee,
-       pickup_schedule, status
-FROM offers
-ORDER BY offer_id DESC;
-```
+1. In Waste Listings, publish a 12.50 kg Trade listing as Producer.
+2. In Settings, select a demo collector. Return to Waste Listings, select the
+   listing and submit a future WIB pickup at Rp 4,000/kg with a Rp 5,000 fee.
+3. Switch to Producer. Open Offers, check the Rp 45,000 estimate and accept.
+4. Switch to the same Collector. In Pickups mark the pickup collected. In
+   Verification attach a sample JPEG or PNG and submit 12.20 kg.
+5. Switch to Producer. In Verification view the scale photo, confirm the
+   measured weight or request a correction. A corrected submission replaces the current demo evidence.
+6. Switch to Collector. In Transactions record an external payment reference.
+   Switch to Producer and acknowledge it. Verify Rp 43,800 measured net and
+   the completed 12.20 kg in Impact. Restart and verify the data persists.
+7. Repeat with Donation. The offer has zero rate and fee, and confirmation
+   completes the pickup without a payment step.
+
+Use pgAdmin to inspect waste_listings and workflow_offers. The final release
+design in docs/ABAH-Release-Design.md describes additional account and API work.
