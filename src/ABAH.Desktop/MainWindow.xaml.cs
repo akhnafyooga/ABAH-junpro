@@ -267,7 +267,7 @@ public partial class MainWindow : Window
                     FROM workflow_offers o JOIN waste_listings l ON l.listing_id=o.listing_id
                     JOIN collectors c ON c.collector_id=o.collector_id
                     WHERE ({filter}) AND (@p0=0 OR o.collector_id=@p0) ORDER BY o.id DESC
-                    """, _collector);
+                    """, _collector, page == 4);
                 if (page == 3 && _collector == 0)
                     Action("Accept offer", () => SaveAsync("""
                         WITH reserved_listing AS (
