@@ -15,12 +15,48 @@ public partial class MainWindow : Window
     private NpgsqlDataSource? _database;
     private int _page = 1;
     private int _collector;
+    private bool _loadingRoles;
+    private sealed record DemoRole(int Id, string Name);
 
 
     public MainWindow()
     {
         InitializeComponent();
-        Loaded += async (_, _) => await ShowPageAsync();
+        Loaded += async (_, _) =>
+        {
+            await LoadRolesAsync();
+            await ShowPageAsync();
+        };
+    }
+
+    private async Task LoadRolesAsync()
+    {
+        _loadingRoles = true;
+        var roles = new List<DemoRole> { new(0, "Producer") };
+        try
+        {
+            foreach (DataRowView row in await QueryAsync("SELECT collector_id, name FROM collectors ORDER BY name"))
+                roles.Add(new DemoRole((int)row[0], (string)row[1]));
+        }
+        catch (Exception ex) when (Handled(ex))
+        {
+            RoleSelector.ToolTip = Error(ex);
+        }
+        finally
+        {
+            RoleSelector.ItemsSource = roles;
+            RoleSelector.SelectedValue = _collector;
+            RoleSelector.IsEnabled = roles.Count > 1;
+            if (RoleSelector.IsEnabled) RoleSelector.ToolTip = null;
+            _loadingRoles = false;
+        }
+    }
+
+    private async void RoleSelector_Changed(object sender, SelectionChangedEventArgs e)
+    {
+        if (_loadingRoles || RoleSelector.SelectedValue is not int id || id == _collector) return;
+        _collector = id;
+        await ShowPageAsync();
     }
 
     private async void Navigate_Click(object sender, RoutedEventArgs e)
@@ -88,7 +124,7 @@ public partial class MainWindow : Window
         });
         var controls = new StackPanel();
         panel.Children.Add(controls);
-        AddButton(controls, "Refresh", ShowPageAsync);
+        AddButton(controls, "Refresh", async () => { if (!RoleSelector.IsEnabled) await LoadRolesAsync(); await ShowPageAsync(); });
         var grid = new ListBox
         {
             Background = System.Windows.Media.Brushes.White, BorderThickness = new Thickness(0),
@@ -102,6 +138,7 @@ public partial class MainWindow : Window
             var button = AddButton(controls, title, async () =>
             {
                 controls.IsEnabled = false;
+                RoleSelector.IsEnabled = false;
                 feedback.Text = "Saving...";
                 try
                 {
@@ -115,7 +152,11 @@ public partial class MainWindow : Window
                     }
                 }
                 catch (Exception ex) when (Handled(ex)) { feedback.Text = Error(ex); }
-                finally { controls.IsEnabled = true; }
+                finally
+                {
+                    controls.IsEnabled = true;
+                    RoleSelector.IsEnabled = RoleSelector.Items.Count > 1;
+                }
             });
             if (title != "Publish listing") actions.Add((button, states));
         }
@@ -132,19 +173,13 @@ public partial class MainWindow : Window
         int Id() => Selected() is DataRowView row
             ? Convert.ToInt32(row[0]) : throw new InvalidOperationException("Select a row first.");
         int Collector() => _collector > 0 ? _collector :
-            throw new InvalidOperationException("Choose a demo collector in Settings first.");
+            throw new InvalidOperationException("Choose a demo collector from the top-right role selector.");
         DataView records;
         try
         {
             if (page == 8)
             {
-                Label(controls, "Local demo session. Choose Producer or a seeded Collector. This does not authenticate an account.");
-                AddButton(controls, "Use Producer", () => { _collector = 0; return ShowPageAsync(); });
-                foreach (DataRowView row in await QueryAsync("SELECT collector_id, name FROM collectors ORDER BY name"))
-                {
-                    int id = Convert.ToInt32(row[0]);
-                    AddButton(controls, $"Use Collector: {row[1]}", () => { _collector = id; return ShowPageAsync(); });
-                }
+                Label(controls, "Use the Demo role selector at the top right to switch between Producer and Collector.");
                 feedback.Text = _collector == 0 ? "Current role: Producer" : $"Current role: Collector #{_collector}";
                 return;
             }

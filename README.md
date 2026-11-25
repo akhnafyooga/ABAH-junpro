@@ -222,13 +222,13 @@ dotnet run --project src/ABAH.Desktop
 ```
 
 Start Visual Studio from an environment that has the same connection variable
-if using F5. Use test data only. Settings switches demo roles locally and the
+if using F5. Use test data only. The top-right selector switches demo roles locally and the
 desktop connects directly to PostgreSQL. This prototype has no authenticated
 accounts or API authorization. The original Module 8 offers remain in the
 legacy offers table and use their original price semantics.
 
 1. In Waste Listings, publish a 12.50 kg Trade listing as Producer.
-2. In Settings, select a demo collector. Return to Waste Listings, select the
+2. In the top-right Demo role selector, select a demo collector. Return to Waste Listings, select the
    listing and submit a future WIB pickup at Rp 4,000/kg with a Rp 5,000 fee.
 3. Switch to Producer. Open Offers, check the Rp 45,000 estimate and accept.
 4. Switch to the same Collector. In Pickups mark the pickup collected. In

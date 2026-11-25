@@ -52,7 +52,16 @@
         <!-- ============ Main area ============ -->
         <DockPanel Grid.Column="1">
 
-            <Border DockPanel.Dock="Top" Background="White" Padding="28,16"><TextBlock x:Name="PageTitle" FontSize="24" FontWeight="Bold" /></Border><ContentControl x:Name="PageHost" />
+            <Border DockPanel.Dock="Top" Background="White" Padding="28,16"><DockPanel>
+                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="Demo role" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                        <ComboBox x:Name="RoleSelector" Width="210" MinHeight="32"
+                                  AutomationProperties.Name="Demo role" DisplayMemberPath="Name"
+                                  SelectedValuePath="Id" SelectionChanged="RoleSelector_Changed"/>
+                    </StackPanel>
+                    <TextBlock x:Name="PageTitle" FontSize="24" FontWeight="Bold" />
+                </DockPanel></Border>
+            <ContentControl x:Name="PageHost" />
         </DockPanel>
     </Grid>
 </Window>
