@@ -53,9 +53,14 @@ public partial class MainWindow
                 var matches = response?.Results ?? [];
                 choices.ItemsSource = matches;
                 choices.Visibility = matches.Length > 0 ? Visibility.Visible : Visibility.Collapsed;
-                note.Text = matches.Length == 0
-                    ? "No matching Indonesian places. Try a nearby city or enter the area manually."
-                    : "Select a result below to fill the pickup area.";
+                if (matches.Length == 0)
+                {
+                    note.Text = "No matching Indonesian places. Try a nearby city or enter the area manually.";
+                    return;
+                }
+
+                choices.SelectedIndex = 0;
+                note.Text = "Top match selected. Check the area or choose another match below.";
             }
             catch (Exception ex) when (ex is HttpRequestException or OperationCanceledException or JsonException)
             {
