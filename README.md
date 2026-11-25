@@ -2,7 +2,7 @@
 
 ABAH helps waste producers offer recyclable material to local collectors and track each pickup through verified weight and a receipt. The Module 10 MVP is a Windows desktop application built with WPF, .NET 10, Npgsql and PostgreSQL. Its pickup area search uses Open-Meteo Geocoding.
 
-- **Run the app** using the [Windows release ZIP](https://github.com/akhnafyooga/ABAH-junpro/releases/tag/module10-mvp-rc1).
+- **Run the app** using the [Windows release ZIP](https://github.com/akhnafyooga/ABAH-junpro/releases/tag/module10-mvp-rc2).
 - **Prepare the submission** using the [Module 10 deliverables record](docs/Module-10-MVP.md).
 - **Test the release** using the [black-box test sheet](docs/Module-10-Black-Box.md).
 

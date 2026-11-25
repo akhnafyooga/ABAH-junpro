@@ -18,6 +18,8 @@ the packaged start and setup instructions in the [README](../README.md).
 | BB09 | Disable internet access while keeping local PostgreSQL reachable. Search a city, then publish with a manually entered area. | An understandable lookup error appears, and the manual listing can be published. | | Not run | |
 | BB10 | At 1280 × 720 and 125% scaling, use Tab to navigate options, inputs and actions. | Required controls remain reachable by keyboard and scrolling. | | Not run | |
 | BB11 | Start with an incorrect port, then close and relaunch with the correct port. | The failed connection has a readable message and the correct settings restore access. | | Not run | |
+| BB12 | Publish with a public meeting-point instruction. Inspect the listing and pending offer, then accept and open Pickups. | The detail stays off the listing and pending offer and appears on the scheduled pickup. | | Not run | |
+| BB13 | Launch with an approved collector business number in ABAH_DEMO_COLLECTOR_WHATSAPP. In Producer mode select a scheduled Melati pickup and click the WhatsApp button. Relaunch with the setting unset. | The button opens the correct wa.me destination when configured and is absent without the setting. Stop at the chat screen. | | Not run | |
 
 Set each case to Pass, Fail or Blocked after execution and describe what
 actually happened. For failures, attach a screenshot or short clip, note the

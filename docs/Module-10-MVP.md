@@ -2,7 +2,7 @@
 
 | Submission item | Deliverable | Evidence status |
 | --- | --- | --- |
-| Application | [Windows x64 release and executable](https://github.com/akhnafyooga/ABAH-junpro/releases/tag/module10-mvp-rc1) | Use the same archive and tag for evaluation. |
+| Application | [Windows x64 release and executable](https://github.com/akhnafyooga/ABAH-junpro/releases/tag/module10-mvp-rc2) | Use the same archive and tag for evaluation. |
 | Installation and database | [README setup](../README.md#install-and-configure) and [SQL scripts](../database/) | Capture successful first launch against a clean test database. |
 | User guide | [README walkthrough](../README.md#user-guide) | Capture the completed Trade receipt and Impact totals. |
 | External web API | [Pickup area lookup](../README.md#find-a-pickup-area) | Capture a search result, selected map preview and successful manual entry. |
