@@ -1,6 +1,7 @@
 BEGIN;
 ALTER TABLE waste_listings ADD COLUMN IF NOT EXISTS mode text NOT NULL DEFAULT 'Trade';
 ALTER TABLE waste_listings ADD COLUMN IF NOT EXISTS pickup_area text NOT NULL DEFAULT '';
+ALTER TABLE waste_listings ADD COLUMN IF NOT EXISTS pickup_instructions text NOT NULL DEFAULT '';
 ALTER TABLE waste_listings ADD COLUMN IF NOT EXISTS reserved boolean NOT NULL DEFAULT false;
 
 -- Separate from the legacy demo so old offers keep their original price semantics.

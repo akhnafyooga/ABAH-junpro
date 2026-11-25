@@ -210,12 +210,14 @@ public partial class MainWindow : Window
                     var kg = Field(controls, "Estimated kg");
                     var area = Field(controls, "Pickup area (city or district)");
                     AddAreaLookup(controls, area);
+                    var address = Field(controls, "Alamat detail / pickup instructions (optional)");
+                    Label(controls, "Use a public meeting point or landmark for this demo.");
                     var mode = new ComboBox { ItemsSource = new[] { "Trade", "Donation" }, SelectedIndex = 0 };
                     controls.Children.Add(mode);
                     Action("Publish listing", () => SaveAsync("""
-                        INSERT INTO waste_listings(material_type,estimated_weight_kg,pickup_area,mode)
-                        VALUES (@p0,@p1,@p2,@p3)
-                        """, Required(material), Number(kg, positive: true), Required(area), (string)mode.SelectedItem));
+                        INSERT INTO waste_listings(material_type,estimated_weight_kg,pickup_area,mode,pickup_instructions)
+                        VALUES (@p0,@p1,@p2,@p3,@p4)
+                        """, Required(material), Number(kg, positive: true), Required(area), (string)mode.SelectedItem, address.Text.Trim()));
                 }
                 else
                 {
@@ -260,7 +262,8 @@ public partial class MainWindow : Window
                     round(l.estimated_weight_kg * o.rate - o.fee, 2) AS "Estimated net",
                     o.actual_kg AS "Measured kg",
                     round(o.actual_kg * o.rate - o.fee, 2) AS "Measured net",
-                    o.correction AS "Correction reason", o.payment_reference AS "Payment reference", l.pickup_area AS "Area"
+                    o.correction AS "Correction reason", o.payment_reference AS "Payment reference", l.pickup_area AS "Area",
+                    CASE WHEN @p1 AND o.status <> 'Pending' THEN l.pickup_instructions END AS "Pickup instructions"
                     FROM workflow_offers o JOIN waste_listings l ON l.listing_id=o.listing_id
                     JOIN collectors c ON c.collector_id=o.collector_id
                     WHERE ({filter}) AND (@p0=0 OR o.collector_id=@p0) ORDER BY o.id DESC
@@ -399,7 +402,7 @@ public partial class MainWindow : Window
                 {
                     2 => ["Mode", "Estimated kg", "Area"],
                     3 => ["Status", "Collector", "Pickup (WIB)", "Rp/kg", "Fee", "Estimated net"],
-                    4 => ["Status", "Collector", "Pickup (WIB)", "Area"],
+                    4 => ["Status", "Collector", "Pickup (WIB)", "Area", "Pickup instructions"],
                     5 => ["Status", "Measured kg", "Measured net", "Correction reason"],
                     6 => ["Status", "Measured kg", "Measured net", "Payment reference"],
                     _ => ["Completed pickups", "Completed kg"]

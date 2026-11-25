@@ -97,3 +97,13 @@ WPF handles navigation and workflow input. Npgsql persists data to PostgreSQL, a
 ## Team and contributions
 
 Akhnaf Fawzan Yogatrisna works on architecture and data design. Rafi Busthami works on frontend and user flows. Akmal Rafli Fauzan works on backend and integration. For ongoing work, use branches such as `feature/pickup-status.rafi`, meaningful commit messages and a teammate-reviewed pull request.
+
+### Add detailed pickup instructions
+
+The map preview shows the approximate area returned by the lookup. When publishing,
+use **Alamat detail / pickup instructions** for a public meeting point, for example
+"Meet at the west gate of the recycling center." The instructions appear on
+**Pickups** after acceptance for the Producer and selected demo collector. The
+demo role switch is shared, so use public locations and synthetic data.
+For an existing database, rerun the updated `database/003_workflow.sql` before
+launching this version.
