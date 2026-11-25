@@ -201,4 +201,48 @@ Database: PostgreSQL managed via pgAdmin
 
 Version Control: Git & GitHub
 
-Development IDE: Visual Studio Code 
+Development IDE: Visual Studio Code
+## Module 8 — Submit an offer
+
+The WPF Offers window reads waste listings and demo collectors from PostgreSQL,
+creates an offer through the C# domain method, and shows the latest 25 saved
+offers. Collector selection is for the demo and does not require an account.
+Enter the proposed offer amount in rupiah and a pickup fee from zero through the
+proposed amount. Enter the pickup date and time in your local time zone.
+
+### Set up the database
+
+Create an empty PostgreSQL database named `abah` owned by your local PostgreSQL
+user. From the repository root, apply the schema and then the demo seed. Replace
+`YOUR_USER` with your PostgreSQL username.
+
+```powershell
+psql -h localhost -U YOUR_USER -d abah -v ON_ERROR_STOP=1 -f database/001_offers.sql -f database/002_demo_seed.sql
+```
+
+You can also run the two SQL files in order in pgAdmin's Query Tool for `abah`.
+
+### Run and verify
+
+Set the connection string in the PowerShell session used to launch the app.
+Replace the username and password placeholders with your local credentials.
+
+```powershell
+$env:ABAH_POSTGRES_CONNECTION = 'Host=localhost;Port=5432;Database=abah;Username=YOUR_USER;Password=YOUR_PASSWORD'
+dotnet run --project src/ABAH.Desktop
+```
+
+1. On the dashboard, click **Open offers**. Select **PET bottles** and
+   **Melati Waste Bank**, enter `25000` for the price and `0` for the fee,
+   and choose a future pickup time.
+2. Click **Submit offer** and record the offer ID. Restart the app and open
+   **Offers** again to see the saved row.
+3. Run the following query in the same database. Match the offer ID in the app
+   to `offer_id` in the query result.
+
+```sql
+SELECT offer_id, listing_id, collector_id, proposed_price, pickup_fee,
+       pickup_schedule, status
+FROM offers
+ORDER BY offer_id DESC;
+```

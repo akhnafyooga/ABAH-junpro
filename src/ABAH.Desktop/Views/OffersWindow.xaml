@@ -1,0 +1,66 @@
+<Window x:Class="ABAH.Desktop.Views.OffersWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ABAH - Offers" Width="920" Height="520" MinWidth="730" MinHeight="450"
+        WindowStartupLocation="CenterOwner" FontFamily="{StaticResource AppFont}"
+        Background="{StaticResource BgBrush}">
+    <DockPanel Margin="24">
+        <StackPanel DockPanel.Dock="Top">
+            <TextBlock Text="Submit an offer" FontSize="24" FontWeight="Bold" />
+            <Grid x:Name="OfferFields" Margin="0,16,0,0" IsEnabled="False">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <StackPanel Margin="0,0,12,12">
+                    <Label Content="Waste listing" Target="{Binding ElementName=Listings}" />
+                    <ComboBox x:Name="Listings" DisplayMemberPath="MaterialType" />
+                </StackPanel>
+                <StackPanel Grid.Column="1" Margin="0,0,12,12">
+                    <Label Content="Demo collector" Target="{Binding ElementName=Collectors}" />
+                    <ComboBox x:Name="Collectors" DisplayMemberPath="Name" />
+                </StackPanel>
+                <StackPanel Grid.Column="2" Margin="0,0,12,12">
+                    <Label Content="Price (Rp)" Target="{Binding ElementName=Price}" />
+                    <TextBox x:Name="Price" />
+                </StackPanel>
+                <StackPanel Grid.Column="3" Margin="0,0,0,12">
+                    <Label Content="Pickup fee (Rp)" Target="{Binding ElementName=Fee}" />
+                    <TextBox x:Name="Fee" Text="0" />
+                </StackPanel>
+                <StackPanel Grid.Row="1" Margin="0,0,12,0">
+                    <Label Content="Pickup date" Target="{Binding ElementName=PickupDate}" />
+                    <DatePicker x:Name="PickupDate" />
+                </StackPanel>
+                <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,12,0">
+                    <Label Content="Local pickup time (HH:mm)" Target="{Binding ElementName=PickupTime}" />
+                    <TextBox x:Name="PickupTime" Text="09:00" />
+                </StackPanel>
+                <Button Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Content="Submit offer"
+                        Style="{StaticResource PrimaryButton}" HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom" Click="SubmitOffer_Click" />
+            </Grid>
+            <TextBlock x:Name="Feedback" Margin="0,12,0,14" TextWrapping="Wrap"
+                       AutomationProperties.LiveSetting="Polite" />
+            <TextBlock Text="Recent offers" Margin="0,0,0,8" FontSize="18" FontWeight="SemiBold" />
+        </StackPanel>
+        <DataGrid x:Name="RecentOffers" IsReadOnly="True" AutoGenerateColumns="False"
+                  CanUserAddRows="False" HeadersVisibility="Column">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Offer ID" Binding="{Binding Id}" />
+                <DataGridTextColumn Header="Material" Binding="{Binding Material}" Width="*" />
+                <DataGridTextColumn Header="Collector" Binding="{Binding Collector}" Width="*" />
+                <DataGridTextColumn Header="Price (Rp)" Binding="{Binding Price}" />
+                <DataGridTextColumn Header="Fee (Rp)" Binding="{Binding Fee}" />
+                <DataGridTextColumn Header="Pickup (local)" Binding="{Binding PickupTime, StringFormat=g}" />
+                <DataGridTextColumn Header="Status" Binding="{Binding Status}" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
+</Window>

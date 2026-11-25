@@ -35,3 +35,10 @@ packages/
 # Claude Code local files
 .claude/
 
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+
+# Local tooling state
+.codex/

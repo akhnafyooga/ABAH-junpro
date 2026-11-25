@@ -106,7 +106,12 @@
 
             <!-- Scrollable dashboard content -->
             <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="0">
-                <views:DashboardView Margin="0" />
+                <StackPanel>
+                    <Button Content="Open offers" Click="OpenOffers_Click"
+                            HorizontalAlignment="Right" Margin="0,20,28,0"
+                            Style="{StaticResource PrimaryButton}" />
+                    <views:DashboardView />
+                </StackPanel>
             </ScrollViewer>
         </DockPanel>
     </Grid>
