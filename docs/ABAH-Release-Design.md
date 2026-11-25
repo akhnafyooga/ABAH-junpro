@@ -8,10 +8,18 @@ This is the release design baseline for ABAH. The target client is WPF with the 
 | --- | --- |
 | Dashboard | Show upcoming pickups, items that need attention, and completed verified kilograms. Each item opens its detail page. |
 | Listings | Producers create and manage listings. Collectors browse and filter by material and area. |
-| Activity | Show offers, pickups, weight reviews and receipts in one list. Open each record for its timeline, current status and next action. |
+| Activity | Open to **Needs my action**, with **All activity** available for waiting, scheduled and completed work. Once an offer is accepted, show one pickup card that opens its timeline, weight review and receipt. |
 | Account menu | Show the current role, allow switching among assigned roles and provide sign-out. |
 
 Keep the existing ABAH wordmark and recycling identity, forest-green sidebar, mint selected states and Segoe UI. Use a labeled status and one primary action per detail view. Show who acts next when the current user has no action. Use inline validation, preserve drafts after connection errors and test keyboard focus and scrolling at 1280 × 720 with 125% scaling.
+
+### Activity and pickup layout
+
+Each activity card shows the material, other participant, pickup time when scheduled, and the current action or waiting message. Sort actionable items by scheduled pickup time, with unscheduled decisions ordered by oldest first. If the queue is empty, show **You're caught up** and a link to **All activity**.
+
+The pickup detail shows **Scheduled → Collected → Weight confirmed → Completed** as the shared timeline. A correction request appears under the weight step and explains what needs to change. Keep **Record payment** and **Acknowledge receipt** as Trade actions under the final step. The same detail stays available through completion, with **View receipt** as the completed action.
+
+Pre-fill the collector's weight form with the listing estimate as a separate reference label. Leave actual weight blank so the collector must enter the measured value. Show estimated and actual kg side by side in the producer's review.
 
 ## Workflow
 
@@ -62,5 +70,6 @@ Run the API and WPF client against a seeded test database. Use separate sessions
 | Duplicate submit | Repeat acceptance or payment recording after a simulated timeout. | The existing result is returned or displayed. One pickup and one receipt remain. |
 | Connection loss | Stop the local API during a listing save, then restart and retry. | Inputs survive. The app checks whether the first save completed before retrying. Only one listing remains. |
 | Keyboard and layout | Run at 1280 × 720 and 125% scaling. Use Tab and Enter through the publish and review flows. | Visible focus, usable scrolling and reachable primary actions. |
+| Activity handoff | Submit an offer, accept it, submit weight and request a correction. After each action, check Activity in both accounts. | The item appears under **Needs my action** for the person who acts next. The other person can find it under **All activity**. After acceptance both accounts use the same pickup detail. |
 
 For the project demo, complete the Trade scenario first, then show a weight correction or competing acceptance. Capture the accepted offer, verified weight, receipt and matching pgAdmin rows.
