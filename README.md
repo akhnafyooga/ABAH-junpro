@@ -107,3 +107,12 @@ use **Alamat detail / pickup instructions** for a public meeting point, for exam
 demo role switch is shared, so use public locations and synthetic data.
 For an existing database, rerun the updated `database/003_workflow.sql` before
 launching this version.
+
+### Contact the demo collector on WhatsApp
+
+Optionally set ABAH_DEMO_COLLECTOR_WHATSAPP in the launch environment to Melati
+Waste Bank's approved business WhatsApp number, using international digits only.
+For an Indonesian number, replace the leading 0 with 62 and remove spaces and
+punctuation. As Producer, select a scheduled Melati pickup in Pickups and click
+**Chat with Melati Waste Bank on WhatsApp**. The button opens a chat in the
+browser. The user chooses whether to send a message.

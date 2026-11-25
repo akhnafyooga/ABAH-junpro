@@ -279,6 +279,35 @@ public partial class MainWindow : Window
                         UPDATE workflow_offers o SET status='Scheduled' FROM reserved_listing r
                         WHERE o.id=@p0 AND o.listing_id=r.listing_id
                         """, Id()));
+                if (page == 4 && _collector == 0)
+                {
+                    var number = Environment.GetEnvironmentVariable("ABAH_DEMO_COLLECTOR_WHATSAPP")?.Trim();
+                    if (number is not null && System.Text.RegularExpressions.Regex.IsMatch(number, @"\A[1-9][0-9]{7,14}\z"))
+                    {
+                        var chat = AddButton(controls, "Chat with Melati Waste Bank on WhatsApp", () =>
+                        {
+                            try
+                            {
+                                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(
+                                    $"https://wa.me/{number}") { UseShellExecute = true });
+                            }
+                            catch (System.ComponentModel.Win32Exception)
+                            {
+                                feedback.Text = "Could not open WhatsApp in the default browser.";
+                            }
+                            return Task.CompletedTask;
+                        });
+                        void UpdateChat()
+                        {
+                            chat.IsEnabled = Selected() is { } pickup &&
+                                (string)pickup["Collector"] == "Melati Waste Bank" &&
+                                (string)pickup["Status"] == "Scheduled";
+                        }
+                        grid.SelectionChanged += (_, _) => UpdateChat();
+                        UpdateChat();
+                    }
+                }
+
                 if (page == 4 && _collector != 0)
                     Action("Mark collected", () => SaveAsync("""
                         UPDATE workflow_offers SET status='Collected'
