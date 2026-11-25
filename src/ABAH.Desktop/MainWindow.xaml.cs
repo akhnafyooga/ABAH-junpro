@@ -208,7 +208,8 @@ public partial class MainWindow : Window
                 {
                     var material = Field(controls, "Material");
                     var kg = Field(controls, "Estimated kg");
-                    var area = Field(controls, "Pickup area");
+                    var area = Field(controls, "Pickup area (city or district)");
+                    AddAreaLookup(controls, area);
                     var mode = new ComboBox { ItemsSource = new[] { "Trade", "Donation" }, SelectedIndex = 0 };
                     controls.Children.Add(mode);
                     Action("Publish listing", () => SaveAsync("""

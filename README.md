@@ -243,3 +243,16 @@ legacy offers table and use their original price semantics.
 
 Use pgAdmin to inspect waste_listings and workflow_offers. The final release
 design in docs/ABAH-Release-Design.md describes additional account and API work.
+
+### Find a pickup area
+
+As Producer, open Waste Listings, enter a public Indonesian city or district
+such as Bandung, and click **Find pickup area**. Select a result to fill the
+listing's pickup area. **Preview selected area on map** opens its approximate
+location in your browser. ABAH saves the area label with the listing. The
+lookup is optional and manual entry works offline.
+
+This non-commercial demo uses [Open-Meteo Geocoding](https://open-meteo.com/en/docs/geocoding-api)
+with [GeoNames](https://www.geonames.org/) data. Map previews open
+[OpenStreetMap](https://www.openstreetmap.org/copyright). Only search for public
+place names. A result represents an area, not a precise pickup address.
