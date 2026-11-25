@@ -22,7 +22,8 @@ public partial class MainWindow
 
     private void AddAreaLookup(Panel parent, TextBox area)
     {
-        var choices = new ComboBox { DisplayMemberPath = "Label", MaxWidth = 450,
+        var choices = new ComboBox { DisplayMemberPath = "Label", Width = 450, MinHeight = 38, MaxDropDownHeight = 320,
+            Padding = new Thickness(10, 6, 10, 6), Margin = new Thickness(0, 8, 0, 0),
             HorizontalAlignment = HorizontalAlignment.Left, Visibility = Visibility.Collapsed };
         var note = Label(parent, "Search by public place name only. You can also enter the pickup area manually.");
         Button? search = null;
