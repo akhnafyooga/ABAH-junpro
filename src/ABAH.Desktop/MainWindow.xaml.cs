@@ -71,22 +71,35 @@ public partial class MainWindow : Window
         string[] names = ["Dashboard", "Waste Listings", "Offers", "Pickups", "Verification", "Transactions", "Impact", "Settings"];
         int page = _page;
         PageTitle.Text = names[page - 1];
+        Title = $"ABAH — {PageTitle.Text}";
         var panel = new StackPanel { Margin = new Thickness(28) };
         PageHost.Content = new ScrollViewer { Content = panel, VerticalScrollBarVisibility = ScrollBarVisibility.Auto };
         var feedback = Label(panel, "");
+        Label(panel, page switch
+        {
+            1 => "See what is ready to collect and how much material has been recovered.",
+            2 => _collector == 0 ? "Share material that a local collector can pick up." : "Choose material and propose a pickup.",
+            3 => "Review the pickup time and estimated proceeds before accepting.",
+            4 => "Check the pickup area and mark material collected when it changes hands.",
+            5 => "Use a scale photo and measured weight to confirm what was collected.",
+            6 => "Check final amounts and acknowledge payments made outside ABAH.",
+            7 => "Track verified material from completed pickups.",
+            _ => "Choose which side of the local demo to try."
+        });
         var controls = new StackPanel();
         panel.Children.Add(controls);
         AddButton(controls, "Refresh", ShowPageAsync);
-        var grid = new DataGrid
+        var grid = new ListBox
         {
-            IsReadOnly = true, AutoGenerateColumns = true, CanUserAddRows = false,
-            SelectionMode = DataGridSelectionMode.Single, MinHeight = 140, MaxHeight = 330,
+            Background = System.Windows.Media.Brushes.White, BorderThickness = new Thickness(0),
+            SelectionMode = SelectionMode.Single, MaxHeight = 330,
             Margin = new Thickness(0, 12, 0, 12)
         };
 
-        void Action(string title, Func<Task> work)
+        var actions = new List<(Button Button, string[] States)>();
+        void Action(string title, Func<Task> work, params string[] states)
         {
-            AddButton(controls, title, async () =>
+            var button = AddButton(controls, title, async () =>
             {
                 controls.IsEnabled = false;
                 feedback.Text = "Saving...";
@@ -104,12 +117,23 @@ public partial class MainWindow : Window
                 catch (Exception ex) when (Handled(ex)) { feedback.Text = Error(ex); }
                 finally { controls.IsEnabled = true; }
             });
+            if (title != "Publish listing") actions.Add((button, states));
         }
 
-        int Id() => grid.SelectedItem is DataRowView row
+        DataRowView? Selected() => (grid.SelectedItem as ListBoxItem)?.Tag as DataRowView;
+        void UpdateActions()
+        {
+            var row = Selected();
+            foreach (var (button, states) in actions)
+                button.IsEnabled = row != null && (states.Length == 0 || states.Contains(row["Status"].ToString()));
+        }
+        grid.SelectionChanged += (_, _) => UpdateActions();
+
+        int Id() => Selected() is DataRowView row
             ? Convert.ToInt32(row[0]) : throw new InvalidOperationException("Select a row first.");
         int Collector() => _collector > 0 ? _collector :
             throw new InvalidOperationException("Choose a demo collector in Settings first.");
+        DataView records;
         try
         {
             if (page == 8)
@@ -127,7 +151,7 @@ public partial class MainWindow : Window
             controls.Children.Add(grid);
             if (page is 1 or 7)
             {
-                grid.ItemsSource = await QueryAsync(page == 1 ? """
+                records = await QueryAsync(page == 1 ? """
                     SELECT (SELECT count(*) FROM waste_listings WHERE NOT reserved) AS "Available listings",
                     count(*) FILTER (WHERE status='Pending') AS "Pending offers",
                     count(*) FILTER (WHERE status NOT IN ('Pending','Completed')) AS "Active pickups",
@@ -141,7 +165,7 @@ public partial class MainWindow : Window
             }
             else if (page == 2)
             {
-                grid.ItemsSource = await QueryAsync("""
+                records = await QueryAsync("""
                     SELECT listing_id AS "ID", material_type AS "Material", estimated_weight_kg AS "Estimated kg",
                     mode AS "Mode", pickup_area AS "Area" FROM waste_listings WHERE NOT reserved ORDER BY listing_id DESC
                     """);
@@ -165,7 +189,7 @@ public partial class MainWindow : Window
                         DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(7)).AddDays(1).ToString("yyyy-MM-dd HH:mm"));
                     Action("Submit offer for selected listing", () =>
                     {
-                        if (grid.SelectedItem is not DataRowView listing)
+                        if (Selected() is not DataRowView listing)
                             throw new InvalidOperationException("Select a listing first.");
                         bool donation = (string)listing[3] == "Donation";
                         var price = donation ? 0 : Number(rate, positive: true);
@@ -193,14 +217,14 @@ public partial class MainWindow : Window
                     5 => "o.status IN ('Collected','Review','Correction')",
                     _ => "o.status IN ('Verified','Recorded','Completed')"
                 };
-                grid.ItemsSource = await QueryAsync($"""
+                records = await QueryAsync($"""
                     SELECT o.id AS "ID", l.material_type AS "Material", l.mode AS "Mode",
                     c.name AS "Collector", o.scheduled_at AT TIME ZONE 'Asia/Jakarta' AS "Pickup (WIB)",
                     o.status AS "Status", o.rate AS "Rp/kg", o.fee AS "Fee",
                     round(l.estimated_weight_kg * o.rate - o.fee, 2) AS "Estimated net",
                     o.actual_kg AS "Measured kg",
                     round(o.actual_kg * o.rate - o.fee, 2) AS "Measured net",
-                    o.correction AS "Correction reason", o.payment_reference AS "Payment reference"
+                    o.correction AS "Correction reason", o.payment_reference AS "Payment reference", l.pickup_area AS "Area"
                     FROM workflow_offers o JOIN waste_listings l ON l.listing_id=o.listing_id
                     JOIN collectors c ON c.collector_id=o.collector_id
                     WHERE ({filter}) AND (@p0=0 OR o.collector_id=@p0) ORDER BY o.id DESC
@@ -220,7 +244,7 @@ public partial class MainWindow : Window
                     Action("Mark collected", () => SaveAsync("""
                         UPDATE workflow_offers SET status='Collected'
                         WHERE id=@p0 AND collector_id=@p1 AND status='Scheduled'
-                        """, Id(), Collector()));
+                        """, Id(), Collector()), "Scheduled");
                 if (page == 5 && _collector != 0)
                 {
                     var weight = Field(controls, "Actual measured kg");
@@ -254,11 +278,11 @@ public partial class MainWindow : Window
                             WHERE id=@p0 AND collector_id=@p1 AND status IN ('Collected','Correction')
                               AND @p2 * rate >= fee
                             """, id, Collector(), kg, image);
-                    });
+                    }, "Collected", "Correction");
                 }
                 if (page is 5 or 6)
                 {
-                    AddButton(controls, "View scale photo", async () =>
+                    var viewPhoto = AddButton(controls, "View scale photo", async () =>
                     {
                         try
                         {
@@ -275,6 +299,7 @@ public partial class MainWindow : Window
                         catch (Exception ex) when (Handled(ex) || ex is NotSupportedException)
                         { feedback.Text = Error(ex); }
                     });
+                    actions.Add((viewPhoto, ["Review", "Correction", "Verified", "Recorded", "Completed"]));
                 }
                 if (page == 5 && _collector == 0)
                 {
@@ -289,7 +314,7 @@ public partial class MainWindow : Window
                     Action("Request correction", () => SaveAsync("""
                         UPDATE workflow_offers SET status='Correction',correction=@p1
                         WHERE id=@p0 AND status='Review'
-                        """, Id(), Required(reason)));
+                        """, Id(), Required(reason)), "Review");
                 }
                 if (page == 6 && _collector != 0)
                 {
@@ -297,7 +322,7 @@ public partial class MainWindow : Window
                     Action("Record payment", () => SaveAsync("""
                         UPDATE workflow_offers SET status='Recorded',payment_reference=@p2
                         WHERE id=@p0 AND collector_id=@p1 AND status='Verified'
-                        """, Id(), Collector(), Required(reference)));
+                        """, Id(), Collector(), Required(reference)), "Verified");
                 }
                 if (page == 6 && _collector == 0)
                     Action("Acknowledge receipt", () => SaveAsync("""
@@ -305,8 +330,65 @@ public partial class MainWindow : Window
                         WHERE id=@p0 AND status='Recorded'
                         """, Id()));
             }
-            feedback.Text = $"{(_collector == 0 ? "Producer" : $"Collector #{_collector}")} demo session · "
-                + (grid.Items.Count == 0 ? "No records yet." : "Select a row to act on it.");
+            if (page == 1)
+            {
+                controls.Children.Remove(grid);
+                var metrics = new WrapPanel { Margin = new Thickness(0, 18, 0, 10) };
+                controls.Children.Add(metrics);
+                var summary = records[0];
+                foreach (DataColumn column in summary.Row.Table.Columns)
+                {
+                    var content = new StackPanel();
+                    var value = Label(content, summary[column.ColumnName].ToString() ?? "0");
+                    value.FontSize = 30;
+                    value.FontWeight = FontWeights.Bold;
+                    Label(content, column.ColumnName);
+                    var card = Card(content);
+                    card.MinWidth = 156;
+                    card.Margin = new Thickness(0, 0, 12, 12);
+                    metrics.Children.Add(card);
+                }
+                AddButton(controls, _collector == 0 ? "Publish recyclable material" : "Find material to collect",
+                    () => GoToAsync(2));
+                return;
+            }
+
+            foreach (DataRowView row in records)
+            {
+                var content = new StackPanel();
+                var title = Label(content, row["Material"].ToString() ?? "");
+                title.FontSize = 17;
+                title.FontWeight = FontWeights.SemiBold;
+                string[] details = page switch
+                {
+                    2 => ["Mode", "Estimated kg", "Area"],
+                    3 => ["Status", "Collector", "Pickup (WIB)", "Rp/kg", "Fee", "Estimated net"],
+                    4 => ["Status", "Collector", "Pickup (WIB)", "Area"],
+                    5 => ["Status", "Measured kg", "Measured net", "Correction reason"],
+                    6 => ["Status", "Measured kg", "Measured net", "Payment reference"],
+                    _ => ["Completed pickups", "Completed kg"]
+                };
+                Label(content, string.Join("   ·   ", details.Where(key => row[key] != DBNull.Value
+                    && !string.IsNullOrWhiteSpace(row[key].ToString())).Select(key => $"{key}: {row[key]}")));
+                grid.Items.Add(new ListBoxItem { Tag = row, Content = content, Padding = new Thickness(14, 6, 14, 6),
+                    HorizontalContentAlignment = HorizontalAlignment.Stretch });
+            }
+
+            UpdateActions();
+            if (records.Count == 0)
+            {
+                grid.Visibility = Visibility.Collapsed;
+                string empty = page switch
+                {
+                    2 => "No material is available for pickup. New listings will appear here.",
+                    3 => "No offers to review. Collector proposals will appear here.",
+                    4 => "No active pickups. Accept an offer to schedule collection.",
+                    5 => "No weight checks yet. Mark a pickup collected to start verification.",
+                    6 => "No transactions yet. Confirm a measured weight to continue.",
+                    _ => "No completed collections yet. Verified weight appears after completion."
+                };
+                controls.Children.Insert(1, Card(new TextBlock { Text = empty, TextWrapping = TextWrapping.Wrap }));
+            }
         }
         catch (Exception ex) when (Handled(ex)) { feedback.Text = Error(ex); }
     }
@@ -346,13 +428,31 @@ public partial class MainWindow : Window
         return field;
     }
 
-    private void AddButton(Panel parent, string title, Func<Task> action)
+    private Button AddButton(Panel parent, string title, Func<Task> action)
     {
         var button = new Button { Content = title, HorizontalAlignment = HorizontalAlignment.Left,
             Margin = new Thickness(0, 8, 0, 0), Style = (Style)FindResource("PrimaryButton") };
         button.Click += async (_, _) => await action();
         parent.Children.Add(button);
+        return button;
     }
+
+    private Task GoToAsync(int page)
+    {
+        _page = page;
+        ListingsNavigation.IsChecked = page == 2;
+        return ShowPageAsync();
+    }
+
+    private Border Card(UIElement content) => new()
+    {
+        Child = content,
+        Background = (System.Windows.Media.Brush)FindResource("CardBrush"),
+        BorderBrush = (System.Windows.Media.Brush)FindResource("LineBrush"),
+        BorderThickness = new Thickness(1),
+        CornerRadius = new CornerRadius(14),
+        Padding = new Thickness(18)
+    };
 
     protected override void OnClosed(EventArgs e)
     {
